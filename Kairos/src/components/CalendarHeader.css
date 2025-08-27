@@ -1,0 +1,20 @@
+.calendar-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1vw 2vw;
+  background: #f0f4f8;
+  border-radius: 1vw;
+  margin-bottom: 2vw;
+}
+
+.calendar-header-title {
+  font-size: 2vw;
+  font-weight: bold;
+  color: #222;
+}
+
+.calendar-header-buttons {
+  display: flex;
+  gap: 1vw;
+}

@@ -1,0 +1,56 @@
+.calendar-day-cell {
+  flex: 1 0 0;
+  height: 10vw;
+  min-width: 10vw;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  border: 0.2vw solid #e0e0e0;
+  background: #fafbfc;
+  cursor: pointer;
+  padding: 0.8vw;
+  transition: background 0.2s;
+}
+
+.calendar-day-cell:hover {
+  background: #e3f2fd;
+}
+
+.calendar-day-cell.today {
+  background: #bbdefb;
+  border-color: #2196f3;
+}
+
+.day-number {
+  font-size: 1.5vw;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 0.4vw;
+}
+
+.events-container {
+  width: 100%;
+  flex: 1;
+}
+
+.event-item {
+  background: #4caf50;
+  border-radius: 0.4vw;
+  padding: 0.2vw 0.4vw;
+  margin-bottom: 0.2vw;
+}
+
+.event-text {
+  font-size: 1vw;
+  color: white;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.more-events {
+  font-size: 1vw;
+  color: #666;
+  font-style: italic;
+}
