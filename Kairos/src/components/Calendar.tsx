@@ -67,7 +67,7 @@ export default function Calendar() {
       description: 'Weekly sync with development team',
       start_time: '2025-08-28T14:00:00.000Z',
       end_time: '2025-08-28T15:30:00.000Z',
-      location: 'Office Build ing',
+      location: 'Office Building',
       all_day: null,
       created_at: '2025-08-27T13:06:25.000Z',
       updated_at: '2025-08-27T13:06:25.000Z',
@@ -256,6 +256,12 @@ export default function Calendar() {
     currentDate.getMonth(),
   );
 
+  if (selectedDate){
+    console.log("Selected date" , selectedDate)
+    console.log("Formatted selected", selectedDate.toISOString().split('T')[0])
+    console.log("Test select" , selectedDate ? eventsByDate[selectedDate.toISOString().split('T')[0]] : [])
+  }
+
   return (
     <view className="calendar-app">
       {/* Top Half - Calendar View */}
@@ -292,7 +298,7 @@ export default function Calendar() {
       {selectedDate && (
         <DayModal
           date={selectedDate}
-          events={eventsByDate[selectedDate.toISOString().split('T')[0]] || []}
+          events={eventsByDate[selectedDate.toLocaleDateString('en-CA')] || []}
           onClose={() => setSelectedDate(null)}
           onAddEvent={handleAddEvent}
           onEditEvent={handleEditEvent}
