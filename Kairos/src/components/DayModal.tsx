@@ -147,7 +147,9 @@ export default function DayModal({
               <view className="empty-day-state">
                 <text className="empty-day-text">
                   📅 No events scheduled
-                </text>
+                  {events.map((event, index) => (
+                      <text key={index}> {event.title} {new Date(event.start_time).toDateString()} </text>
+                    ))}                </text>
                 <text className="empty-day-subtitle">
                   Tap "Add" to create your first event
                 </text>

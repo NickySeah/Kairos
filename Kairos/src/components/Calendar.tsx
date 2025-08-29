@@ -61,6 +61,17 @@ export default function Calendar() {
       created_at: '2025-08-27T13:06:25.000Z',
       updated_at: '2025-08-27T13:06:25.000Z',
     },
+    {
+      id: 10,
+      title: 'Team Meeting 3',
+      description: 'Weekly sync with development team',
+      start_time: '2025-08-28T14:00:00.000Z',
+      end_time: '2025-08-28T15:30:00.000Z',
+      location: 'Office Build ing',
+      all_day: null,
+      created_at: '2025-08-27T13:06:25.000Z',
+      updated_at: '2025-08-27T13:06:25.000Z',
+    },
   ]);
 
   /**
@@ -85,7 +96,7 @@ export default function Calendar() {
 
         // Add event with formatted time for this specific date
         const eventForDate = {
-          ...event,
+          ...event, //Spread Operator for shallow copy
           displayStartTime: formatTimeForDate(event, currentDate),
           isMultiDay: startDate.toDateString() !== endDate.toDateString(),
           isFirstDay: currentDate.toDateString() === startDate.toDateString(),
@@ -98,7 +109,7 @@ export default function Calendar() {
         currentDate.setDate(currentDate.getDate() + 1);
       }
     });
-
+    console.log(grouped)
     return grouped;
   };
 
@@ -156,6 +167,7 @@ export default function Calendar() {
 
   // Event handlers
   const handleSelectDate = (date: Date) => {
+    console.log('Selected date:', date);
     setSelectedDate(date);
   };
 
@@ -182,7 +194,7 @@ export default function Calendar() {
         updated_at: new Date().toISOString(),
       };
       setRawEvents([...rawEvents, newEvent]);
-    } else {
+    } else { // Does it edit properly
       setRawEvents(
         rawEvents.map((e) =>
           e.id === eventData.id

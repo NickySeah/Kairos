@@ -16,3 +16,5 @@ export function App() {
     </view>
   )
 }
+
+export default App;
