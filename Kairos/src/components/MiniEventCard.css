@@ -1,0 +1,40 @@
+/* Small event indicator dot for calendar cells */
+.mini-event-dot {
+  width: 2vw;  /* Larger for better mobile visibility */
+  height: 2vw;
+  border-radius: 50%;
+  background-color: #4a90e2;
+  cursor: pointer;
+  margin: 0.2vw;
+  transition: all 0.3s ease;
+  box-shadow: 0 0.2vw 0.5vw rgba(0, 0, 0, 0.2);
+  border: 0.1vw solid rgba(255, 255, 255, 0.3);
+}
+
+/* Hover/active effects for better user feedback */
+.mini-event-dot:hover {
+  transform: scale(1.2);
+  box-shadow: 0 0.3vw 0.8vw rgba(0, 0, 0, 0.3);
+}
+
+.mini-event-dot:active {
+  transform: scale(1.1);
+  box-shadow: 0 0.1vw 0.3vw rgba(0, 0, 0, 0.4);
+}
+
+/* Responsive sizing */
+@media (max-width: 480px) {
+  .mini-event-dot {
+    width: 2.5vw;
+    height: 2.5vw;
+    margin: 0.3vw;
+  }
+}
+
+@media (min-width: 768px) {
+  .mini-event-dot {
+    width: 1.5vw;
+    height: 1.5vw;
+    margin: 0.1vw;
+  }
+}

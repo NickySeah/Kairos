@@ -1,0 +1,52 @@
+/* Main app container - splits screen into calendar and AI chat */
+.calendar-app {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100vw;
+  background-color: #F5F5DC;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  overflow: hidden;
+}
+
+/* Top half - Calendar section (60% of screen) */
+.calendar-section {
+  flex: 0 0 55vh;
+  display: flex;
+  flex-direction: column;
+  /* background: rgba(255, 255, 255, 0.95); */
+  /* backdrop-filter: blur(10px); */
+  border-radius: 0 0 4vw 4vw;
+  /* box-shadow: 0 2vw 8vw rgba(0, 0, 0, 0.1); */
+  /* margin-bottom: 0; */
+  overflow: hidden;
+}
+
+/* Bottom half - AI Chat section (40% of screen) */
+.ai-chat-section {
+  flex: 1;
+  background: rgba(255, 255, 255, 0.1);
+  /* backdrop-filter: blur(10px); */
+  /* margin: 0 2vw 2vw 2vw; */
+  border-radius: 4vw 4vw 0 0;
+  display: flex;
+  flex-direction: column;
+  min-height: 0; /* Allow shrinking */
+}
+
+/* Responsive adjustments for different screen sizes */
+@media (max-width: 480px) {
+  .calendar-section {
+    flex: 0 0 55vh; /* Slightly less space on small screens */
+  }
+  
+  .calendar-app {
+    font-size: 14px;
+  }
+}
+
+@media (min-width: 768px) {
+  .calendar-section {
+    flex: 0 0 65vh; /* More space on tablets */
+  }
+}

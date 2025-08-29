@@ -1,56 +1,127 @@
+/* Individual calendar day cell */
 .calendar-day-cell {
-  flex: 1 0 0;
-  height: 10vw;
-  min-width: 10vw;
+  flex: 1;
+  min-height: 14vw; /* Increased for better mobile touch */
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   justify-content: flex-start;
-  border: 0.2vw solid #e0e0e0;
-  background: #fafbfc;
+  border: 0.15vw solid #e3f2fd;
+  background: linear-gradient(145deg, #ffffff 0%, #f8fafc 100%);
   cursor: pointer;
-  padding: 0.8vw;
-  transition: background 0.2s;
+  padding: 1.5vw;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
 }
 
+/* Hover effect for day cells */
 .calendar-day-cell:hover {
-  background: #e3f2fd;
+  background: linear-gradient(145deg, #e3f2fd 0%, #bbdefb 100%);
+  transform: scale(1.02);
+  box-shadow: 0 1vw 4vw rgba(33, 150, 243, 0.2);
 }
 
+/* Active/pressed state */
+.calendar-day-cell:active {
+  background: linear-gradient(145deg, #81c784 0%, #4caf50 100%);
+  transform: scale(0.98);
+}
+
+/* Today's date highlighting */
 .calendar-day-cell.today {
-  background: #bbdefb;
-  border-color: #2196f3;
+  background: linear-gradient(145deg, #bbdefb 0%, #90caf9 100%);
+  border: 0.3vw solid #2196f3;
+  box-shadow: 0 0 0 0.2vw rgba(33, 150, 243, 0.3);
+  animation: todayPulse 2s infinite;
 }
 
+/* Subtle animation for today's date */
+@keyframes todayPulse {
+  0%, 100% {
+    box-shadow: 0 0 0 0.2vw rgba(33, 150, 243, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 0 0.5vw rgba(33, 150, 243, 0.5);
+  }
+}
+
+/* Day number styling */
 .day-number {
-  font-size: 1.5vw;
-  font-weight: bold;
-  color: #333;
-  margin-bottom: 0.4vw;
+  font-size: 3.5vw; /* Larger for mobile readability */
+  font-weight: 700;
+  color: #1a237e;
+  margin-bottom: 1vw;
+  z-index: 2;
+  position: relative;
 }
 
+/* Today's day number */
+.calendar-day-cell.today .day-number {
+  color: #0d47a1;
+  text-shadow: 0 0.2vw 0.5vw rgba(13, 71, 161, 0.3);
+}
+
+/* Events container within day cell */
 .events-container {
   width: 100%;
   flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  position: relative;
 }
 
-.event-item {
-  background: #4caf50;
-  border-radius: 0.4vw;
-  padding: 0.2vw 0.4vw;
-  margin-bottom: 0.2vw;
+/* Container for event indicator dots */
+.event-dots {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3vw;
+  max-width: 100%;
+  align-items: flex-start;
+  margin-top: auto; /* Push to bottom of cell */
 }
 
-.event-text {
-  font-size: 1vw;
-  color: white;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
+/* Text showing additional events count */
 .more-events {
-  font-size: 1vw;
+  font-size: 2.5vw;
   color: #666;
   font-style: italic;
+  font-weight: 500;
+  margin-top: 0.5vw;
+  text-align: center;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 1vw;
+  padding: 0.5vw;
+}
+
+/* Responsive adjustments */
+@media (max-width: 480px) {
+  .calendar-day-cell {
+    min-height: 16vw;
+    padding: 1vw;
+  }
+  
+  .day-number {
+    font-size: 4vw;
+  }
+  
+  .more-events {
+    font-size: 2vw;
+  }
+}
+
+@media (min-width: 768px) {
+  .calendar-day-cell {
+    min-height: 12vw;
+    padding: 2vw;
+  }
+  
+  .day-number {
+    font-size: 2.5vw;
+  }
+  
+  .more-events {
+    font-size: 1.5vw;
+  }
 }

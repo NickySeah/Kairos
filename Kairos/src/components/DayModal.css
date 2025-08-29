@@ -1,0 +1,194 @@
+/* Day detail modal overlay */
+.day-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  /* backdrop-filter: blur(8px); */
+}
+
+/* Main day modal container */
+.day-modal {
+  background: linear-gradient(145deg, #ffffff 0%, #f8fafc 100%);
+  border-radius: 4vw;
+  width: 95vw;
+  height: 85vh;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 4vw 20vw rgba(0, 0, 0, 0.3);
+  border: 0.2vw solid rgba(255, 255, 255, 0.8);
+  overflow: hidden;
+}
+
+/* Modal header with title and actions */
+.day-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 4vw;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 4vw 4vw 0 0;
+  box-shadow: 0 1vw 3vw rgba(0, 0, 0, 0.1);
+}
+
+/* Day modal title */
+.day-modal-title {
+  font-size: 5vw;
+  font-weight: 700;
+  color: white;
+  text-shadow: 0 0.5vw 1vw rgba(0, 0, 0, 0.3);
+  flex: 1;
+}
+
+/* Header actions container */
+.day-modal-header-actions {
+  display: flex;
+  gap: 2vw;
+  align-items: center;
+}
+
+/* Add event button */
+.add-event-btn {
+  background: linear-gradient(135deg, #4caf50 0%, #45a049 100%) !important;
+  color: white !important;
+  font-size: 3.5vw !important;
+  padding: 2vw 4vw !important;
+  border-radius: 2vw !important;
+}
+
+/* Close button */
+.close-btn {
+  background: linear-gradient(135deg, #f44336 0%, #d32f2f 100%) !important;
+  color: white !important;
+  width: 10vw !important;
+  height: 10vw !important;
+  border-radius: 50% !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 5vw !important;
+  min-width: auto !important;
+  min-height: auto !important;
+  padding: 0 !important;
+}
+
+/* Timeline container */
+.day-timeline-container {
+  flex: 1;
+  display: flex;
+  position: relative;
+  overflow-y: auto;
+  background: linear-gradient(to right, #f5f7fa 0%, #c3cfe2 100%);
+}
+
+/* Left timeline with hours */
+.timeline {
+  width: 15vw; /* Increased for mobile */
+  background: linear-gradient(145deg, #e8eaf6 0%, #c5cae9 100%);
+  border-right: 0.2vw solid #9575cd;
+  flex-shrink: 0;
+}
+
+/* Individual time slot */
+.time-slot {
+  height: 8vh; /* Increased for better mobile experience */
+  display: flex;
+  align-items: center;
+  border-bottom: 0.1vw solid rgba(149, 117, 205, 0.3);
+  position: relative;
+}
+
+/* Time label (hour display) */
+.time-label {
+  font-size: 2.5vw; /* Larger for mobile readability */
+  color: #4a148c;
+  padding: 0 1vw;
+  font-weight: 600;
+  text-shadow: 0 0.1vw 0.2vw rgba(74, 20, 140, 0.2);
+}
+
+/* Horizontal line indicator */
+.time-line {
+  position: absolute;
+  right: 0;
+  width: 1vw;
+  height: 0.1vw;
+  background: #9575cd;
+  box-shadow: 0 0.1vw 0.2vw rgba(149, 117, 205, 0.3);
+}
+
+/* Events track (right side where events are positioned) */
+.events-track {
+  flex: 1;
+  position: relative;
+  padding: 0 2vw;
+  background: linear-gradient(to bottom, 
+    rgba(255, 255, 255, 0.9) 0%, 
+    rgba(248, 250, 252, 0.8) 100%);
+}
+
+/* Responsive adjustments */
+@media (max-width: 480px) {
+  .day-modal {
+    width: 98vw;
+    height: 90vh;
+    border-radius: 3vw;
+  }
+  
+  .day-modal-header {
+    padding: 3vw;
+  }
+  
+  .day-modal-title {
+    font-size: 4.5vw;
+  }
+  
+  .timeline {
+    width: 18vw;
+  }
+  
+  .time-label {
+    font-size: 2vw;
+  }
+  
+  .time-slot {
+    height: 10vw;
+  }
+  
+  .add-event-btn {
+    font-size: 3vw !important;
+    padding: 1.5vw 3vw !important;
+  }
+  
+  .close-btn {
+    width: 8vw !important;
+    height: 8vw !important;
+    font-size: 4vw !important;
+  }
+}
+
+@media (min-width: 768px) {
+  .day-modal {
+    width: 80vw;
+    height: 75vh;
+    max-width: 800px;
+  }
+  
+  .timeline {
+    width: 12vw;
+  }
+  
+  .time-label {
+    font-size: 1.8vw;
+  }
+  
+  .time-slot {
+    height: 6vw;
+  }
+}

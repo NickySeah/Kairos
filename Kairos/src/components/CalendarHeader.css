@@ -1,20 +1,89 @@
+/* Calendar header with month navigation */
 .calendar-header {
   display: flex;
+  flex-direction: row;
   align-items: center;
-  justify-content: space-between;
-  padding: 1vw 2vw;
-  background: #f0f4f8;
-  border-radius: 1vw;
-  margin-bottom: 2vw;
+  padding: 2vw 3vw;
+  background: #A3B18A;
+  border-radius: 0;
+  margin: 0;
+  box-shadow: 0 1vw 3vw rgba(0, 0, 0, 0.1);
+  height: 20vw;
 }
 
+/* Month and year title */
 .calendar-header-title {
-  font-size: 2vw;
-  font-weight: bold;
-  color: #222;
+  font-size: 6vw;
+  font-weight: 700;
+  color: #20498A;
+  flex: 1;
 }
 
+/* Navigation buttons container */
 .calendar-header-buttons {
   display: flex;
-  gap: 1vw;
+  gap: 2vw;
+}
+
+/* Navigation button styling */
+.nav-button {
+  width: 10vw;
+  height: 10vw;
+  border-radius: 50%;
+  min-width: auto;
+  min-height: auto;
+  padding: 0;
+  /* backdrop-filter: blur(10px); */
+  border: 0.3vw solid rgba(255, 255, 255, 0.3);
+}
+
+.nav-button:hover,
+.nav-button:active {
+  background: rgba(255, 255, 255, 0.3) !important;
+  transform: scale(1.05);
+}
+
+.nav-button .button-text {
+  font-size: 6vw;
+  font-weight: bold;
+  line-height: 1;
+}
+
+/* Responsive design for different screen sizes */
+@media (max-width: 480px) {
+  .calendar-header {
+    padding: 3vw 4vw;
+  }
+  
+  .calendar-header-title {
+    font-size: 5vw;
+  }
+  
+  .nav-button {
+    width: 10vw;
+    height: 10vw;
+  }
+  
+  .nav-button .button-text {
+    font-size: 5vw;
+  }
+}
+
+@media (min-width: 768px) {
+  .calendar-header {
+    padding: 3vw 5vw;
+  }
+  
+  .calendar-header-title {
+    font-size: 4vw;
+  }
+  
+  .nav-button {
+    width: 8vw;
+    height: 8vw;
+  }
+  
+  .nav-button .button-text {
+    font-size: 4vw;
+  }
 }
