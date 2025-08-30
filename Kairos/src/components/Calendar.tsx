@@ -3,14 +3,12 @@ import CalendarHeader from './CalendarHeader.js';
 import CalendarGrid from './CalendarGrid.js';
 import DayModal from './DayModal.js';
 import EventModal from './EventModal.js';
-// import AIChat from './AIChat.js'; // New AI chat component
 import './Calendar.css'; // Add main calendar styles
 
 /**
  * Main Calendar App Component
  * Features:
  * - Top half: Calendar view with events
- * - Bottom half: AI chat interface for calendar interactions
  * - Handles event creation, editing, and AI suggestions
  */
 export default function Calendar() {
@@ -248,41 +246,7 @@ export default function Calendar() {
     setSelectedEvent(null);
   };
 
-  /**
-   * Handles AI suggestions to add/modify events
-   * This function will be called by the AI chat component
-   */
-  const handleAISuggestion = (suggestion: any) => {
-    // Process AI suggestion and update calendar accordingly
-    console.log('AI Suggestion received:', suggestion);
-    
-    // Example: AI suggests adding an event
-    if (suggestion.type === 'add_event') {
-      const newEvent = {
-        id: Date.now(),
-        title: suggestion.title,
-        description: suggestion.description || '',
-        start_time: suggestion.start_time,
-        end_time: suggestion.end_time,
-        location: suggestion.location || '',
-        all_day: suggestion.all_day || null,
-        created_at: new Date().toISOString(),
-        updated_at: new Date().toISOString(),
-      };
-      setRawEvents([...rawEvents, newEvent]);
-    }
-    
-    // Example: AI suggests modifying an event
-    if (suggestion.type === 'modify_event') {
-      setRawEvents(
-        rawEvents.map((e) =>
-          e.id === suggestion.event_id
-            ? { ...e, ...suggestion.changes, updated_at: new Date().toISOString() }
-            : e,
-        ),
-      );
-    }
-  };
+
 
   // Generate days for current month
   const currentDays = generateDaysForMonth(
@@ -320,13 +284,6 @@ export default function Calendar() {
         />
       </view>
 
-      {/* Bottom Half - AI Chat Interface */}
-      {/* <view className="ai-chat-section">
-        <AIChat 
-          events={rawEvents}
-          onAISuggestion={handleAISuggestion}
-        />
-      </view> */}
 
       {/* Modals */}
       {selectedDate && (

@@ -7,12 +7,14 @@ import Button from './components/Button.js'
 import arrow from './assets/arrow.png'
 import lynxLogo from './assets/lynx-logo.png'
 import reactLynxLogo from './assets/react-logo.png'
+import MessageItem from './components/MessageItem.js'
+import ChatInput from './components/ChatInput.js'
 
 export function App() {
 
   return (
     <view>
-      <Calendar />
+      <ChatInput/>
     </view>
   )
 }
