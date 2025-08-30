@@ -1,4 +1,4 @@
-import { useState } from '@lynx-js/react';
+import {useEffect, useState } from '@lynx-js/react';
 import CalendarHeader from './CalendarHeader.js';
 import CalendarGrid from './CalendarGrid.js';
 import DayModal from './DayModal.js';
@@ -73,6 +73,24 @@ export default function Calendar() {
       updated_at: '2025-08-27T13:06:25.000Z',
     },
   ]);
+
+    const getEvents = async () => {
+      try {
+        const json = await fetch(
+          "http://localhost:3001/events",
+        ).then((res) => res.json());
+        setRawEvents(json);
+        console.log("Fetched events: ", json);
+      } 
+      catch (error) {
+        console.error(error);
+        console.log("Using default events")
+      } 
+    }
+
+    useEffect(() => {
+      getEvents();
+    }, [])
 
   /**
    * Groups events by date, handling multi-day events
