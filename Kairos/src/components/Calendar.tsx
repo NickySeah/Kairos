@@ -44,7 +44,7 @@ export default function Calendar() {
       title: 'Multi-day Conference',
       description: 'Annual technology conference - 3 day event',
       start_time: '2025-08-29T09:00:00.000Z',
-      end_time: '2025-08-31T17:00:00.000Z',
+      end_time: '2025-08-31T20:00:00.000Z',
       location: 'Convention Center',
       all_day: null,
       created_at: '2025-08-27T13:06:25.000Z',
@@ -78,40 +78,74 @@ export default function Calendar() {
    * Groups events by date, handling multi-day events
    * Each event appears on every date it spans
    */
+
   const groupEventsByDate = (events: any[]) => {
-    const grouped: { [key: string]: any[] } = {};
+  const grouped: { [key: string]: any[] } = {};
 
-    events.forEach((event) => {
-      const startDate = new Date(event.start_time);
-      const endDate = new Date(event.end_time);
+  events.forEach((event) => {
+    const startDate = new Date(event.start_time);
+    const endDate = new Date(event.end_time);
 
-      // Create event instances for each date the event spans
-      const currentDate = new Date(startDate);
-      while (currentDate <= endDate) {
-        const dateKey = currentDate.toISOString().split('T')[0]; // YYYY-MM-DD
+    // Create event instances for each date the event spans
+    const currentDate = new Date(event.start_time);
 
-        if (!grouped[dateKey]) {
-          grouped[dateKey] = [];
-        }
+    let localStart = startDate.toDateString();
+    let localCurrent  = currentDate.toDateString();
+    let localEnd = endDate.toDateString();
 
-        // Add event with formatted time for this specific date
-        const eventForDate = {
-          ...event, //Spread Operator for shallow copy
-          displayStartTime: formatTimeForDate(event, currentDate),
-          isMultiDay: startDate.toDateString() !== endDate.toDateString(),
-          isFirstDay: currentDate.toDateString() === startDate.toDateString(),
-          isLastDay: currentDate.toDateString() === endDate.toDateString(),
-        };
+    while (new Date(localCurrent) <= new Date(localEnd)) {
 
-        grouped[dateKey].push(eventForDate);
-
-        // Move to next day
-        currentDate.setDate(currentDate.getDate() + 1);
+      if (!grouped[localCurrent]) {
+        grouped[localCurrent] = [];
       }
-    });
-    console.log(grouped)
-    return grouped;
-  };
+
+      // Default bounds for this day
+      const dayStart = new Date(localCurrent);
+      dayStart.setHours(0, 0, 0, 0);
+
+      const dayEnd = new Date(localCurrent);
+      dayEnd.setHours(23, 59, 59, 999);
+
+      // Clamp to real event range
+      const splitStart =
+        localCurrent === localStart
+          ? startDate.toString()
+          : dayStart;
+      const splitEnd =
+        localCurrent === localEnd
+          ? endDate.toString()
+          : dayEnd;
+
+      // Add event with adjusted start/end for this date
+      const eventForDate = {
+        ...event,
+        start_time: splitStart,
+        end_time: splitEnd,
+        //displayStartTime: formatTimeForDate(event, currentDate),
+        //isMultiDay: startDate.toDateString() !== endDate.toDateString(),
+        //isFirstDay: currentDate.toDateString() === startDate.toDateString(),
+        //isLastDay: currentDate.toDateString() === endDate.toDateString(),
+      };
+      if (event.title == "Multi-day Conference"){
+        console.log(localCurrent, localEnd, localStart);
+        console.log("Multi day event split", splitStart, splitEnd);
+        console.log("Original", event.start_time, event.end_time);
+      }
+      //console.log(splitStart, splitEnd);
+      //console.log(eventForDate.start_time, eventForDate.end_time);
+      grouped[localCurrent].push(eventForDate);
+
+      // Move to next day
+      let holdLocalCurrent = new Date(localCurrent);
+      holdLocalCurrent.setDate(holdLocalCurrent.getDate() + 1);
+      localCurrent = holdLocalCurrent.toDateString();
+    }
+  });
+
+  console.log(grouped);
+  return grouped;
+};
+
 
   /**
    * Formats time display for events based on which day we're viewing
@@ -298,7 +332,7 @@ export default function Calendar() {
       {selectedDate && (
         <DayModal
           date={selectedDate}
-          events={eventsByDate[selectedDate.toLocaleDateString('en-CA')] || []}
+          events={eventsByDate[selectedDate.toDateString()] || []}
           onClose={() => setSelectedDate(null)}
           onAddEvent={handleAddEvent}
           onEditEvent={handleEditEvent}

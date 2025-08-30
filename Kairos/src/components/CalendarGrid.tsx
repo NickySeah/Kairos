@@ -45,7 +45,7 @@ export default function CalendarGrid({
    * Each day shows its number and any events as indicator dots
    */
   const dayCells = days.map(date => {
-    const dateKey = date.toISOString().split('T')[0] // Convert to YYYY-MM-DD format
+    const dateKey = date.toDateString() 
     const dayEvents = events[dateKey] || [] // Get events for this specific date
     
     return (
