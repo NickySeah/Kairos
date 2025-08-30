@@ -22,40 +22,48 @@ export default function CalendarGrid({
 }: CalendarGridProps) {
   
   /**
-   * Calculate empty cells needed at the beginning of the month
-   * Based on which day of the week the month starts
+   * FIXED: Create a new array instead of modifying the original
+   * Calculate empty cells needed at the beginning and end of the month
    */
-  const firstDay = days.length > 0 
-    ? new Date(days[0].getFullYear(), days[0].getMonth(), 1).getDay() 
-    : 0
-  const lastDay = days.length > 0 
-    ? new Date(days[0].getFullYear(), days[0].getMonth()+1, 0).getDay() 
-    : 0
-  
+  const createGridDays = () => {
+    if (days.length === 0) return [];
+    
+    // Start with a copy of the days array
+    const gridDays = [...days];
+    
+    // Calculate empty cells needed at the beginning of the month
+    const firstDay = new Date(days[0].getFullYear(), days[0].getMonth(), 1).getDay();
+    const lastDay = new Date(days[0].getFullYear(), days[0].getMonth() + 1, 0).getDay();
+    
+    // Add previous month days at the beginning
+    for (let i = 0; i < firstDay; i++) {
+      const fillDate = new Date(days[0]);
+      fillDate.setDate(fillDate.getDate() - (firstDay - i));
+      gridDays.unshift(fillDate);
+    }
 
-  for (let i = 0; i<firstDay; i++) {
-    let fillDate = new Date(days[0]);
-    fillDate.setDate(fillDate.getDate() - 1)
-    days.unshift(fillDate);
-  }
+    // Add next month days at the end
+    for (let i = lastDay + 1; i <= 6; i++) {
+      const fillDate = new Date(days[days.length - 1]);
+      fillDate.setDate(fillDate.getDate() + (i - lastDay));
+      gridDays.push(fillDate);
+    }
+    
+    return gridDays;
+  };
 
-  for (let i = lastDay+1; i<=6; i++) {
-    let fillDate = new Date(days[days.length - 1]);
-    fillDate.setDate(fillDate.getDate() + 1)
-    days.push(fillDate);
-  }
-
-  console.log("Dayss: ",days)
-
-  
+  const gridDays = createGridDays();
+  console.log("Grid days:", gridDays.map(d => d.toDateString()));
 
   /**
    * Create cells for actual calendar days
    * Each day shows its number and any events as indicator dots
    */
-  const dayCells = days.map(date => {
-    const dateKey = date.toDateString() 
-    const dayEvents = events[dateKey] || [] // Get events for this specific date
+  const dayCells = gridDays.map(date => {
+    const dateKey = date.toDateString();
+    const dayEvents = events[dateKey] || []; // Get events for this specific date
+    
+    console.log(`Date: ${dateKey}, Events:`, dayEvents.length);
     
     return (
       <CalendarDayCell
@@ -64,21 +72,19 @@ export default function CalendarGrid({
         events={dayEvents}
         onClickAddEvent={onSelectDate}
       />
-    )
-  })
-
-  // }
+    );
+  });
 
   /**
    * Split all cells into rows of 7 (one week per row)
    */
-  const rows = []
+  const rows = [];
   for (let i = 0; i < dayCells.length; i += 7) {
     rows.push(
       <view className="calendar-row" key={`week-${Math.floor(i / 7)}`}>
         {dayCells.slice(i, i + 7)}
       </view>
-    )
+    );
   }
 
   return (
@@ -97,5 +103,5 @@ export default function CalendarGrid({
         {rows}
       </view>
     </view>
-  )
+  );
 }

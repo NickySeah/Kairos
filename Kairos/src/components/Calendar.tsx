@@ -95,72 +95,58 @@ export default function Calendar() {
    * Each event appears on every date it spans
    */
 
-  const groupEventsByDate = (events: any[]) => {
-  const grouped: { [key: string]: any[] } = {};
+const groupEventsByDate = (events: any[]) => {
+    const grouped: { [key: string]: any[] } = {};
 
-  events.forEach((event) => {
-    const startDate = new Date(event.start_time);
-    const endDate = new Date(event.end_time);
+    events.forEach((event) => {
+      const startDate = new Date(event.start_time);
+      const endDate = new Date(event.end_time);
 
-    // Create event instances for each date the event spans
-    const currentDate = new Date(event.start_time);
+      // Create event instances for each date the event spans
+      const currentDate = new Date(startDate);
 
-    let localStart = startDate.toDateString();
-    let localCurrent  = currentDate.toDateString();
-    let localEnd = endDate.toDateString();
+      while (currentDate <= endDate) {
+        // FIXED: Use consistent date key format (toDateString)
+        const dateKey = currentDate.toDateString();
 
-    while (new Date(localCurrent) <= new Date(localEnd)) {
+        if (!grouped[dateKey]) {
+          grouped[dateKey] = [];
+        }
 
-      if (!grouped[localCurrent]) {
-        grouped[localCurrent] = [];
+        // Default bounds for this day
+        const dayStart = new Date(currentDate);
+        dayStart.setHours(0, 0, 0, 0);
+
+        const dayEnd = new Date(currentDate);
+        dayEnd.setHours(23, 59, 59, 999);
+
+        // Clamp to real event range
+        const isFirstDay = currentDate.toDateString() === startDate.toDateString();
+        const isLastDay = currentDate.toDateString() === endDate.toDateString();
+        
+        const splitStart = isFirstDay ? startDate : dayStart;
+        const splitEnd = isLastDay ? endDate : dayEnd;
+
+        // Add event with adjusted start/end for this date
+        const eventForDate = {
+          ...event,
+          start_time: splitStart.toISOString(),
+          end_time: splitEnd.toISOString(),
+          isMultiDay: startDate.toDateString() !== endDate.toDateString(),
+          isFirstDay,
+          isLastDay,
+        };
+
+        grouped[dateKey].push(eventForDate);
+
+        // Move to next day
+        currentDate.setDate(currentDate.getDate() + 1);
       }
+    });
 
-      // Default bounds for this day
-      const dayStart = new Date(localCurrent);
-      dayStart.setHours(0, 0, 0, 0);
-
-      const dayEnd = new Date(localCurrent);
-      dayEnd.setHours(23, 59, 59, 999);
-
-      // Clamp to real event range
-      const splitStart =
-        localCurrent === localStart
-          ? startDate.toString()
-          : dayStart;
-      const splitEnd =
-        localCurrent === localEnd
-          ? endDate.toString()
-          : dayEnd;
-
-      // Add event with adjusted start/end for this date
-      const eventForDate = {
-        ...event,
-        start_time: splitStart,
-        end_time: splitEnd,
-        //displayStartTime: formatTimeForDate(event, currentDate),
-        //isMultiDay: startDate.toDateString() !== endDate.toDateString(),
-        //isFirstDay: currentDate.toDateString() === startDate.toDateString(),
-        //isLastDay: currentDate.toDateString() === endDate.toDateString(),
-      };
-      if (event.title == "Multi-day Conference"){
-        console.log(localCurrent, localEnd, localStart);
-        console.log("Multi day event split", splitStart, splitEnd);
-        console.log("Original", event.start_time, event.end_time);
-      }
-      //console.log(splitStart, splitEnd);
-      //console.log(eventForDate.start_time, eventForDate.end_time);
-      grouped[localCurrent].push(eventForDate);
-
-      // Move to next day
-      let holdLocalCurrent = new Date(localCurrent);
-      holdLocalCurrent.setDate(holdLocalCurrent.getDate() + 1);
-      localCurrent = holdLocalCurrent.toDateString();
-    }
-  });
-
-  console.log(grouped);
-  return grouped;
-};
+    console.log('Grouped events by date:', grouped);
+    return grouped;
+  };
 
 
   /**
