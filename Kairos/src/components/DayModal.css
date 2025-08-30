@@ -137,6 +137,11 @@
     rgba(248, 250, 252, 0.8) 100%);
 }
 
+/* Empty Day State*/
+.empty-day-state {
+  position: fixed;
+}
+
 /* Responsive adjustments */
 @media (max-width: 480px) {
   .day-modal {

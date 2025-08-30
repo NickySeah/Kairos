@@ -147,15 +147,17 @@ export default function DayModal({
 
             {/* Empty state when no events */}
             {todayEvents.length === 0 && (
-              <view className="empty-day-state">
-                <text className="empty-day-text">
-                  📅 No events scheduled
-                  {events.map((event, index) => (
-                      <text key={index}> {event.title} {new Date(event.start_time).toDateString()} </text>
-                    ))}                </text>
-                <text className="empty-day-subtitle">
-                  Tap "Add" to create your first event
-                </text>
+              <view className = "empty-day-wrapper">
+                <view className="empty-day-state">
+                  <text className="empty-day-text">
+                    📅 No events scheduled
+                    {events.map((event, index) => (
+                        <text key={index}> {event.title} {new Date(event.start_time).toDateString()} </text>
+                      ))}                </text>
+                  <text className="empty-day-subtitle">
+                    Tap "Add" to create your first event
+                  </text>
+                </view>
               </view>
             )}
           </view>

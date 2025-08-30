@@ -1,3 +1,5 @@
+
+const cors = require('cors');
 const express = require("express");
 const bodyParser = require("body-parser");
 
@@ -14,6 +16,7 @@ const {
 } = require("./eventService");
 
 app.use(bodyParser.json());
+app.use(cors());
 
 function formatForMySQL(dateStr) {
   const d = new Date(dateStr);
@@ -229,6 +232,6 @@ app.delete("/events/:id", async (req, res) => {
   }
 });
 
-app.listen(3000, () => {
-  console.log("Server is running on port 3000");
+app.listen(3001, () => {
+  console.log("Server is running on port 3001");
 });
