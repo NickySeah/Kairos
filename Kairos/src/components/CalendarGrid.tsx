@@ -28,17 +28,37 @@ export default function CalendarGrid({
   const firstDay = days.length > 0 
     ? new Date(days[0].getFullYear(), days[0].getMonth(), 1).getDay() 
     : 0
+  const lastDay = days.length > 0 
+    ? new Date(days[0].getFullYear(), days[0].getMonth()+1, 0).getDay() 
+    : 0
   
+
+  for (let i = 0; i<firstDay; i++) {
+    let fillDate = new Date(days[0]);
+    fillDate.setDate(fillDate.getDate() - 1)
+    days.unshift(fillDate);
+  }
+
+  for (let i = lastDay+1; i<=6; i++) {
+    let fillDate = new Date(days[days.length - 1]);
+    fillDate.setDate(fillDate.getDate() + 1)
+    days.push(fillDate);
+  }
+
+  console.log("Dayss: ",days)
+
+  
+
   /**
    * Create empty cells for days before the first day of the month
    * This ensures proper calendar alignment
    */
-  const emptyCells = []
-  for (let i = 0; i < firstDay; i++) {
-    emptyCells.push(
-      <view key={`empty-start-${i}`} className="calendar-cell empty" />
-    )
-  }
+  // const emptyCells = []
+  // for (let i = 0; i < firstDay; i++) {
+  //   emptyCells.push(
+  //     <view key={`empty-start-${i}`} className="calendar-cell empty" />
+  //   )
+  // }
 
   /**
    * Create cells for actual calendar days
@@ -61,26 +81,26 @@ export default function CalendarGrid({
   /**
    * Combine empty cells and actual day cells
    */
-  const allCells = [...emptyCells, ...dayCells]
+  //  const allCells = [...emptyCells, ...dayCells]
 
   /**
    * Fill remaining cells to complete the last week
    * Ensures calendar grid is always complete rectangles
    */
-  while (allCells.length % 7 !== 0) {
-    allCells.push(
-      <view key={`empty-end-${allCells.length}`} className="calendar-cell empty" />
-    )
-  }
+  // while (allCells.length % 7 !== 0) {
+  //   allCells.push(
+  //     <view key={`empty-end-${allCells.length}`} className="calendar-cell empty" />
+  //   )
+  // }
 
   /**
    * Split all cells into rows of 7 (one week per row)
    */
   const rows = []
-  for (let i = 0; i < allCells.length; i += 7) {
+  for (let i = 0; i < dayCells.length; i += 7) {
     rows.push(
       <view className="calendar-row" key={`week-${Math.floor(i / 7)}`}>
-        {allCells.slice(i, i + 7)}
+        {dayCells.slice(i, i + 7)}
       </view>
     )
   }
