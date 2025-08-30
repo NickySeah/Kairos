@@ -1,18 +1,41 @@
 import './ChatInput.css';
 import { useState } from '@lynx-js/react';
 
-export default function ChatInput() {
+interface ChatInputProps {
+    onSendMessage: (message: string) => void;
+}
+
+export default function ChatInput({ onSendMessage }: ChatInputProps) {
   const [inputContent, setInputContent] = useState('');
 
   const handleSendMessage = () => {
-    console.log(inputContent);
+    if (inputContent.trim()) {
+      console.log(inputContent);
+      onSendMessage(inputContent);
+    }
+
+    // Clear the input using the setValue method
+    lynx
+      .createSelectorQuery()
+      .select('#chatInput')
+      .invoke({
+        method: 'setValue',
+        params: {
+          value: '',
+        },
+      })
+      .exec();
+
     setInputContent('');
+    //Send message to server or perform desired action
+    //Show message bubble
   };
 
   return (
     <view className="chat-input">
       <view className="chat-box">
         <input
+            id="chatInput"
           placeholder="Message"
           bindinput={(res: any) => {
             console.log(res.detail.value);

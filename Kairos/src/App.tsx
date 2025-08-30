@@ -9,14 +9,17 @@ import lynxLogo from './assets/lynx-logo.png'
 import reactLynxLogo from './assets/react-logo.png'
 import MessageItem from './components/MessageItem.js'
 import ChatInput from './components/ChatInput.js'
+import AIChatbox from './components/AIChatbox.js'
 
 export function App() {
 
   return (
     <view>
-      <ChatInput/>
+      <AIChatbox />
     </view>
   )
+      
+
 }
 
 export default App;
