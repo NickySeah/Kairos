@@ -2,8 +2,8 @@
 .calendar-app {
   display: flex;
   flex-direction: column;
-  height: 100vh;
   width: 100vw;
+  max-height:50vh;
   background-color: #F5F5DC;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   overflow: hidden;

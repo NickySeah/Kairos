@@ -75,7 +75,7 @@ export default function Calendar() {
     const getEvents = async () => {
       try {
         const json = await fetch(
-          "http://localhost:3001/events",
+          "http://192.168.1.131:3001/events",
         ).then((res) => res.json());
         setRawEvents(json);
         console.log("Fetched events: ", json);

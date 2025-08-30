@@ -49,7 +49,8 @@ export function App() {
     
   // ];
   return (
-    <view>
+    <view style = {"display: 'flex', flexDirection: 'column', height: '100vh', width: '100vw'}>"}>
+      <Calendar/>
       <AIChatbox/>
     </view>
   )
