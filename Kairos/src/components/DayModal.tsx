@@ -144,8 +144,7 @@ export default function DayModal({
                   onEdit={() => onEditEvent(event)}
                 />
               ))}
-          </view>
-            
+
             {/* Empty state when no events */}
             {todayEvents.length === 0 && (
               <view className="empty-day-state">
@@ -159,6 +158,9 @@ export default function DayModal({
                 </text>
               </view>
             )}
+          </view>
+            
+
           </view>
         </scroll-view>
       </view>

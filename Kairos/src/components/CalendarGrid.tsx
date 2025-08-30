@@ -50,17 +50,6 @@ export default function CalendarGrid({
   
 
   /**
-   * Create empty cells for days before the first day of the month
-   * This ensures proper calendar alignment
-   */
-  // const emptyCells = []
-  // for (let i = 0; i < firstDay; i++) {
-  //   emptyCells.push(
-  //     <view key={`empty-start-${i}`} className="calendar-cell empty" />
-  //   )
-  // }
-
-  /**
    * Create cells for actual calendar days
    * Each day shows its number and any events as indicator dots
    */
@@ -78,19 +67,6 @@ export default function CalendarGrid({
     )
   })
 
-  /**
-   * Combine empty cells and actual day cells
-   */
-  //  const allCells = [...emptyCells, ...dayCells]
-
-  /**
-   * Fill remaining cells to complete the last week
-   * Ensures calendar grid is always complete rectangles
-   */
-  // while (allCells.length % 7 !== 0) {
-  //   allCells.push(
-  //     <view key={`empty-end-${allCells.length}`} className="calendar-cell empty" />
-  //   )
   // }
 
   /**
