@@ -9,7 +9,6 @@
   border: 0.15vw solid #e3f2fd;
   background: linear-gradient(145deg, #ffffff 0%, #f8fafc 100%);
   cursor: pointer;
-  padding: 1.5vw;
   transition: all 0.3s ease;
   position: relative;
   overflow: hidden;
@@ -54,6 +53,7 @@
   margin-bottom: 1vw;
   z-index: 2;
   position: relative;
+  padding: 1vw;
 }
 
 /* Today's day number */

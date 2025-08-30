@@ -61,8 +61,8 @@ export default function DayModal({
     const height = Math.max(durationHours * 8, 4); // Minimum 4vw height for touch
     
     return {
-      top: `${topPosition}vw`,
-      height: `${height}vw`,
+      top: `${topPosition}vh`,
+      height: `${height}vh`,
     };
   };
 
@@ -92,6 +92,7 @@ export default function DayModal({
    */
   const todayEvents = events.filter(event => {
     const eventDate = new Date(event.start_time);
+    console.log("Test:",eventDate.toDateString(), date.toDateString());
     return eventDate.toDateString() === date.toDateString();
   });
 
@@ -121,27 +122,29 @@ export default function DayModal({
         
         {/* Timeline view container */}
         <scroll-view className="day-timeline-container">
-          {/* Left side - Hour timeline */}
-          <view className="timeline">
-            {timeSlots.map((slot) => (
-              <view key={slot.hour} className="time-slot">
-                <text className="time-label">{formatTimeSlot(slot)}</text>
-                <view className="time-line" />
-              </view>
-            ))}
-          </view>
-          
-          {/* Right side - Events track */}
-          <view className="events-track">
-            {todayEvents.map((event, index) => (
-              <BigEventCard
-                key={`${event.id}-${index}`}
-                event={event}
-                style={getEventStyle(event)}
-                onEdit={() => onEditEvent(event)}
-              />
-            ))}
+          <view className = "day-modal-content">
+
+            {/* Left side - Hour timeline */}
+            <view className="timeline">
+              {timeSlots.map((slot) => (
+                <view key={slot.hour} className="time-slot">
+                  <text className="time-label">{formatTimeSlot(slot)}</text>
+                  <view className="time-line" />
+                </view>
+              ))}
+            </view>
             
+            {/* Right side - Events track */}
+            <view className="events-track">
+              {todayEvents.map((event, index) => (
+                <BigEventCard
+                  key={`${event.id}-${index}`}
+                  event={event}
+                  style={getEventStyle(event)}
+                  onEdit={() => onEditEvent(event)}
+                />
+              ))}
+
             {/* Empty state when no events */}
             {todayEvents.length === 0 && (
               <view className="empty-day-state">
@@ -155,6 +158,9 @@ export default function DayModal({
                 </text>
               </view>
             )}
+          </view>
+            
+
           </view>
         </scroll-view>
       </view>
