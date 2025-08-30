@@ -9,7 +9,6 @@ CREATE TABLE events (
     all_day BOOLEAN DEFAULT FALSE,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    -- user_id INT
 );
 
 INSERT INTO events (title, description, start_time, end_time, location, all_day)
