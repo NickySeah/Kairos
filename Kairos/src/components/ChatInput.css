@@ -1,0 +1,38 @@
+.chat-input {
+  background-color: blueviolet;
+  height: 9vh;
+  display: linear;
+  linear-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.chat-box {
+  background-color: white;
+  height: 7vh;
+  width: 75vw;
+  border-radius: 2em;
+  margin-left: 2vw;
+  display: flex;
+  align-items: center;
+  padding-left: 3vw;
+  font-size: 3.5vw;
+}
+
+.chat-box input {
+    font-size: 3vw;
+}
+
+.circular-button {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 12vw;
+  width: 12vw;
+  border-radius: 50%;
+  border: thin solid rgb(0, 0, 0);
+    margin-right: 2vw;
+    background-color: salmon;
+}
+

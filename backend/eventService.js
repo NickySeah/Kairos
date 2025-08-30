@@ -116,7 +116,7 @@ async function findNextAvailableSlot({
   all_day,
 }) {
   // Calculate duration in milliseconds between requested start
-  const duration = new Date(end_time) - new Date(start_time) ;
+  const duration = new Date(end_time) - new Date(start_time);
 
   const bufferTime = 60 * 60 * 1000;
 
@@ -154,12 +154,15 @@ async function findNextAvailableSlot({
   }
 
   // Check if requested slot conflicts with any existing events
-  const hasConflict = events.some(
-    (event) =>
-      (requestedStart >= event.start && requestedStart < event.end) ||
-      (requestedEnd > event.start && requestedEnd <= event.end) ||
-      (requestedStart <= event.start && requestedEnd >= event.end)
-  );
+  const hasConflict = events.some((event) => {
+    const bufferStart = new Date(event.start.getTime() - bufferTime);
+    const bufferEnd = new Date(event.end.getTime() + bufferTime);
+    return (
+      (requestedStart >= bufferStart && requestedStart < bufferEnd) ||
+      (requestedEnd > bufferStart && requestedEnd <= bufferEnd) ||
+      (requestedStart <= bufferStart && requestedEnd >= bufferEnd)
+    );
+  });
 
   // If no conflict, use the requested time
   if (!hasConflict) {
@@ -170,42 +173,43 @@ async function findNextAvailableSlot({
   }
 
   // Check before first event
-  if (
-    // Before first event
-    events[0].start > requestedStart &&
-    // Ensure enough time before first event
-    events[0].start.getTime() - requestedStart.getTime() >= duration 
-  ) {
-    return {
-      suggested_start_time: formatDateSG(requestedStart),
-      suggested_end_time: formatDateSG(
-        new Date(requestedStart.getTime() + duration)
-      ),
-    };
-  }
+  // const firstEventWithBuffer = new Date(events[0].start.getTime() - bufferTime);
+
+  // if (
+  //   firstEventWithBuffer > new Date(Date.now() + bufferTime) &&
+  //   firstEventWithBuffer.getTime() - (Date.now() + bufferTime) >= duration
+  // ) {
+  //   const suggestedStart = new Date(Date.now() + bufferTime);
+  //   return {
+  //     suggested_start_time: formatDateSG(suggestedStart),
+  //     suggested_end_time: formatDateSG(
+  //       new Date(suggestedStart.getTime() + duration)
+  //     ),
+  //   };
+  // }
 
   // Look between events
   for (let i = 0; i < events.length - 1; i++) {
-    const currentEnd = events[i].end;
-    const nextStart = events[i + 1].start;
-    const availableTime = nextStart.getTime() - currentEnd.getTime();
+    const currentEndWithBuffer = new Date(events[i].end.getTime() + bufferTime);
+    const nextStartWithBuffer = new Date(events[i + 1].start.getTime() - bufferTime);
+    const availableTime = nextStartWithBuffer.getTime() - currentEndWithBuffer.getTime();
 
     if (availableTime >= duration) {
       return {
-        suggested_start_time: formatDateSG(currentEnd),
+        suggested_start_time: formatDateSG(currentEndWithBuffer),
         suggested_end_time: formatDateSG(
-          new Date(currentEnd.getTime() + duration)
+          new Date(currentEndWithBuffer.getTime() + duration)
         ),
       };
     }
   }
 
   // After last event
-  const lastEventEnd = events[events.length - 1].end;
+  const lastEventEndWithBuffer = new Date(events[events.length - 1].end.getTime() + bufferTime);
   return {
-    suggested_start_time: formatDateSG(lastEventEnd),
+    suggested_start_time: formatDateSG(lastEventEndWithBuffer),
     suggested_end_time: formatDateSG(
-      new Date(lastEventEnd.getTime() + duration)
+      new Date(lastEventEndWithBuffer.getTime() + duration)
     ),
   };
 }
