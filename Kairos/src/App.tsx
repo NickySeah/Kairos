@@ -49,9 +49,15 @@ export function App() {
   ];
   return (
     <view>
+<<<<<<< HEAD
       <MessageList messageList= {messageListMock}/>
+=======
+      <AIChatbox />
+>>>>>>> 0e8b0a107548230113608c7b2032a5c9ae79c984
     </view>
   )
+      
+
 }
 
 export default App;
