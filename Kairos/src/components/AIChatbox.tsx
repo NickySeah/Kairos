@@ -5,7 +5,7 @@ import MessageList from './MessageList.js';
 import MessageItem from './MessageItem.js';
 import { ad } from 'vitest/dist/chunks/reporters.d.BFLkQcL6.js';
 
-interface Message {
+export interface Message {
   sender: string;
   text: string;
 }
@@ -52,6 +52,7 @@ export default function AIChatbox() {
   };
   return (
     <view className='ai-chatbox'>
+      <MessageList messageList={messages}/>
       <ChatInput onSendMessage={sendPromptToAI} />
     </view>
   );

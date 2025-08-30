@@ -1,3 +1,4 @@
 .ai-chatbox {
-
+    display: flex;
+    flex-direction: column;
 }
